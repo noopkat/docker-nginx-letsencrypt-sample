@@ -20,7 +20,7 @@ services:
     container_name: nginx-gen
     volumes:
       - "/var/run/docker.sock:/tmp/docker.sock:ro"
-      - "./volumes/proxy/templates/nginx.tmpl:/etc/docker-gen/templates/nginx.tmpl:ro"
+      - "./volumes/proxy/templates:/etc/docker-gen/templates:ro"
     volumes_from:
       - nginx
     entrypoint: /usr/local/bin/docker-gen -notify-sighup nginx -watch -wait 5s:30s /etc/docker-gen/templates/nginx.tmpl /etc/nginx/conf.d/default.conf
@@ -56,7 +56,7 @@ services:
     container_name: sample-website
     volumes:
       - "./volumes/nginx-sample-website/conf.d/:/etc/nginx/conf.d"
-      - "./volumes/config/sample-website/config.js:/usr/share/nginx/html/config.js"
+      - "./volumes/config/sample-website:/usr/share/nginx/html/config"
     environment:
       - VIRTUAL_HOST=samplewebsite.example.com
       - VIRTUAL_NETWORK=nginx-proxy
